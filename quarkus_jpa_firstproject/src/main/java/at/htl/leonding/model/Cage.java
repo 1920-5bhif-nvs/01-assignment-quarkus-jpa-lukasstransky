@@ -2,12 +2,14 @@ package at.htl.leonding.model;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
 @NamedQueries({
+        @NamedQuery(name = "Cage.findAll", query = "select c from Cage c"),
         @NamedQuery(name = "Cage.findByRow", query = "select c from Cage c where c.cage_row = :row"),
         @NamedQuery(name = "Cage.findByColumn", query = "select c from Cage c where c.cage_column = :column"),
-        @NamedQuery(name = "Cage.findPetFromCage", query = "select c from Cage c join Pet p on p.id = c.pet.id where p.id = :id"),
 })
 public class Cage {
 
@@ -26,11 +28,6 @@ public class Cage {
 
     //region Constructors
     public Cage() {
-    }
-
-    public Cage(int row, int column){
-        this.setCage_row(row);
-        this.setCage_column(column);
     }
 
     public Cage(int cage_row, int cage_column, Pet pet, AnimalShelter animalShelter) {

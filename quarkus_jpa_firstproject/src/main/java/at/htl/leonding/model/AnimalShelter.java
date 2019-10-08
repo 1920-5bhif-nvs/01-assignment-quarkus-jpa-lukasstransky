@@ -2,17 +2,19 @@ package at.htl.leonding.model;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "AnimalShelter")
+@Entity
+@XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "AnimalShelter.findAll", query = "select a from AnimalShelter a"),
         @NamedQuery(name = "AnimalShelter.findByTown", query = "select a from AnimalShelter a where a.town = :town"),
-        @NamedQuery(name = "AnimalShelter.findByZipCode", query = "select a from AnimalShelter a where a.post_code = :postCode")
+        @NamedQuery(name = "AnimalShelter.findByPostCode", query = "select a from AnimalShelter a where a.post_code = :postCode")
 })
-public class AnimalShelter implements Serializable {
+public class AnimalShelter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

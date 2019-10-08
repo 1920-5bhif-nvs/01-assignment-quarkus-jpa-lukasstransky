@@ -2,8 +2,8 @@ package at.htl.leonding.rest;
 
 import at.htl.leonding.model.AnimalShelter;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,7 @@ import java.util.List;
 @Path("animalShelter")
 public class AnimalShelterEndpoint {
 
-    @PersistenceContext
+    @Inject
     EntityManager em;
 
     @GET
@@ -42,7 +42,7 @@ public class AnimalShelterEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/postCode/{postCode}")
     public AnimalShelter getAnimalShelterByPostCode(@PathParam("postCode") String postCode) {
-        return em.createNamedQuery("AnimalShelter.findByZipCode", AnimalShelter.class).setParameter("postCode", postCode).getSingleResult();
+        return em.createNamedQuery("AnimalShelter.findByPostCode", AnimalShelter.class).setParameter("postCode", postCode).getSingleResult();
     }
 
     @POST

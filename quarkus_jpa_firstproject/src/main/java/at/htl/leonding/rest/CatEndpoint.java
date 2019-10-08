@@ -2,41 +2,54 @@ package at.htl.leonding.rest;
 
 import at.htl.leonding.model.Cat;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("cat")
 public class CatEndpoint {
 
-    @PersistenceContext
+    @Inject
     EntityManager em;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    public Response getCats(){
+        TypedQuery<Cat> query = em.createNamedQuery("Cat.findAll", Cat.class);
+        List<Cat> result = query.getResultList();
+        return Response.ok().entity(result).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response getDrugTreatment(@PathParam("id") long id) {
+    public Response getCat(@PathParam("id") long id) {
         Cat cat = em.find(Cat.class, id);
-        return Response
-                .ok()
-                .entity(cat)
-                .build();
+        return Response.ok().entity(cat).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/name/{name}")
-    public Cat getCatByName(@PathParam("name") String name) {
-        return em.createNamedQuery("Cat.findByName", Cat.class).setParameter("name", name).getSingleResult();
+    public Response getCatsByName(@PathParam("name") String name) {
+        TypedQuery<Cat> query = em.createNamedQuery("Cat.findByName", Cat.class);
+        query.setParameter("name", name);
+        List<Cat> result = query.getResultList();
+        return Response.ok().entity(result).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/age/{age}")
-    public Cat getCatByAge(@PathParam("age") int age) {
-        return em.createNamedQuery("Cat.findByAge", Cat.class).setParameter("age", age).getSingleResult();
+    public Response getCatsByAge(@PathParam("age") int age) {
+        TypedQuery<Cat> query = em.createNamedQuery("Cat.findByAge", Cat.class);
+        query.setParameter("age", age);
+        List<Cat> result = query.getResultList();
+        return Response.ok().entity(result).build();
     }
 
     @POST
