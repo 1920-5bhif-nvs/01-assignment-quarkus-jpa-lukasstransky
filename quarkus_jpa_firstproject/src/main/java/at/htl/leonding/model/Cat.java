@@ -22,7 +22,7 @@ public class Cat extends Pet{
     public Cat() {
     }
 
-    public Cat(String breed, int age, double weight, String name, int price) {
+    public Cat(String breed, int age, double weight, String name, double price) {
         super(breed, age, weight, name, price);
     }
     //endregion constructors

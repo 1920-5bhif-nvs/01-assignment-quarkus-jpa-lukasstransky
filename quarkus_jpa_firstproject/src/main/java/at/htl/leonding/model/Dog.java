@@ -20,7 +20,7 @@ public class Dog extends Pet {
     public Dog() {
     }
 
-    public Dog(String breed, int age, double weight, String name, int price) {
+    public Dog(String breed, int age, double weight, String name, double price) {
         super(breed, age, weight, name, price);
     }
     //endregion

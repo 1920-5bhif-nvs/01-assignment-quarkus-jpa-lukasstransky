@@ -16,13 +16,13 @@ public abstract class Pet {
     private int age;
     private double weight;
     private String name;
-    private int price;
+    private double price;
 
     //region constructors
     public Pet() {
     }
 
-    public Pet(String breed, int age, double weight, String name, int price) {
+    public Pet(String breed, int age, double weight, String name, double price) {
         this.breed = breed;
         this.age = age;
         this.weight = weight;
@@ -68,11 +68,11 @@ public abstract class Pet {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
     //endregion

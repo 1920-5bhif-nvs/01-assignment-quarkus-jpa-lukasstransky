@@ -3,6 +3,8 @@ package at.htl.leonding.model;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @XmlRootElement
@@ -14,27 +16,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Cage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int cage_row;
     private int cage_column;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    private Pet pet;
-
-    //@JsonbTransient
-    @ManyToOne(cascade = {CascadeType.ALL})
-    private AnimalShelter animalShelter;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cage_id") //um assoziative Tabelle zu vermeiden
+    private List<Pet> pets = new ArrayList<>();
 
     //region Constructors
     public Cage() {
     }
 
-    public Cage(int cage_row, int cage_column, Pet pet, AnimalShelter animalShelter) {
+    public Cage(int cage_row, int cage_column) {
         this.setCage_row(cage_row);
         this.setCage_column(cage_column);
-        this.setPet(pet);
-        this.setAnimalShelter(animalShelter);
     }
     //endregion
 
@@ -57,20 +54,20 @@ public class Cage {
         this.cage_column = cage_column;
     }
 
-    public Pet getPet() {
-        return pet;
+    public List<Pet> getPets() {
+        return pets;
+    }
+    //endregion
+
+    //region methods
+    public void addPet(Pet pet){
+        if(!this.pets.contains(pet))
+            this.pets.add(pet);
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
-    }
-
-    public AnimalShelter getAnimalShelter() {
-        return animalShelter;
-    }
-
-    public void setAnimalShelter(AnimalShelter animalShelter) {
-        this.animalShelter = animalShelter;
+    public void removePet(Pet pet){
+        if(this.pets.contains(pet))
+            this.pets.remove(pet);
     }
     //endregion
 }

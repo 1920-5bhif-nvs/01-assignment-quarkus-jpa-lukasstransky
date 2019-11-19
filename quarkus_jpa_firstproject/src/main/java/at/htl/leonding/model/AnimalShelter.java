@@ -12,20 +12,20 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "AnimalShelter.findAll", query = "select a from AnimalShelter a"),
         @NamedQuery(name = "AnimalShelter.findByTown", query = "select a from AnimalShelter a where a.town = :town"),
-        @NamedQuery(name = "AnimalShelter.findByPostCode", query = "select a from AnimalShelter a where a.post_code = :postCode")
+        @NamedQuery(name = "AnimalShelter.findByPostCode", query = "select a from AnimalShelter a where a.post_code = :postCode"),
 })
 public class AnimalShelter {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //identity beginnt bei jeder Tabelle bei 0
     private Long id;
 
     private String town;
     private String street;
     private int post_code;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "animalShelter")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="shelter_id") //um assoziative Tabelle zu vermeiden
     private List<Cage> cages = new ArrayList<>();
 
     //region Constructors
@@ -71,6 +71,18 @@ public class AnimalShelter {
 
     public List<Cage> getCages(){
         return this.cages;
+    }
+    //endregion
+
+    //region methods
+    public void addCage(Cage cage){
+        if(!this.cages.contains(cage))
+            this.cages.add(cage);
+    }
+
+    public void removeCage(Cage cage){
+        if(this.cages.contains(cage))
+            this.cages.remove(cage);
     }
     //endregion
 }

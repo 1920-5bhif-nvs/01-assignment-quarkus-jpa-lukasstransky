@@ -1,6 +1,7 @@
 package at.htl.leonding.rest;
 
 import at.htl.leonding.model.AnimalShelter;
+import at.htl.leonding.model.Cage;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
